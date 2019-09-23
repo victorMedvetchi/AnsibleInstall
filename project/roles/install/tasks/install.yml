@@ -1,0 +1,40 @@
+   - name: Create a directory
+     file:
+       path: '{{ dest_dir }}'
+       state: directory
+       mode: '0755'
+
+
+
+   - name: Unzip on remote
+     unarchive: 
+      src: '{{ source_dir }}{{ source_zip }}'
+      dest: '{{ dest_dir }}'
+
+
+   - name: Copy file with owner and permissions
+     copy:
+       src: '{{ source_dir }}{{ executable }}'
+       dest: '{{ dest_dir }}'
+       mode: '0755'
+
+
+   - name: Change the working directory to and run tibcoinstall.
+     command: ' {{ executable_command }} -silent  {{ silent | join(" ")}}'
+     args:
+      chdir: '{{ dest_dir }}'
+
+
+   - name: Clean path
+     file:
+       state: absent
+       path: "{{ dest_dir }}/"
+
+
+   - name: Create a directory
+     file:
+       path: '{{ dest_dir }}'
+       state: directory
+       mode: '0755'
+
+

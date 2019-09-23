@@ -1,0 +1,10 @@
+ - name: poc install bw6  
+   hosts: tibco
+   vars_files:
+    - vars/vars.yml
+
+   roles:
+     - role: install
+       when: tibco_install_flg == 'YES'
+     - role: bw6_post_install
+       when: bw_configure_flg == 'YES'

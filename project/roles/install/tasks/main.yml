@@ -1,0 +1,6 @@
+    - include: install.yml source_zip="{{item}}"
+      with_items: "{{source_list}}"
+
+
+
+
