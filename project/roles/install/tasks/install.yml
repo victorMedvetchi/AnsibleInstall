@@ -8,7 +8,7 @@
 
    - name: Unzip on remote
      unarchive: 
-      src: '{{ source_dir }}{{ source_zip }}'
+      src: '{{ source_dir }}{{ source_list.source }}'
       dest: '{{ dest_dir }}'
 
 
@@ -19,10 +19,21 @@
        mode: '0755'
 
 
-   - name: Change the working directory to and run tibcoinstall.
+   - name: Change the working directory to and run generic tibcoinstall .
      command: ' {{ executable_command }} -silent  {{ silent | join(" ")}}'
      args:
       chdir: '{{ dest_dir }}'
+     when: source_list.silent_file=='NONE'
+ 
+   - name:  generate silent file 
+     template: "src={{source_list.silent_file}} dest={{dest_dir}}/{{source_list.name}}.silent mode=0644"
+     when: source_list.silent_file != 'NONE'
+
+   - name: Change the working directory to and run silent tibcoinstall .
+     command: '{{ executable_command }} -silent  -V responseFile="{{ source_list.name }}.silent"'
+     args:
+      chdir: '{{ dest_dir }}'
+     when: source_list.silent_file!='NONE' 
 
 
    - name: Clean path

@@ -1,23 +1,29 @@
-    tibco_install_flg: YES
+    tibco_home: '/home/tibco/Desktop/software/bw_6_5'
+    tibco_install_flg: 'YES'
+    tibco_config_home: '/home/tibco/Desktop/software/config'
+    tibco_env_name: 'BW6_TEST_1'
     silent:
-     - -V installationRoot="/home/tibco/Desktop/software/bw_6_5"
-     - -V selectedProfiles="Typical"
-     - -V environmentName="BW6_TEST_1"
-     - -V environmentName="BW6_TEST_1"
-     - -V configDirRoot="/home/tibco/Desktop/software/config"
+     - -V installationRoot="{{tibco_home}}"
+     - -V environmentName="{{tibco_env_name}}"
+
     dest_dir: /home/tibco/install/
     source_dir: /home/elastik/source/
-    source_list: 
-     - TIB_BW_6.5.1_linux26gl23_x86_64.zip
-     - TIB_BW_6.5.1_HF-001.zip
-     - TIB_ems_8.4.1_linux_x86_64.zip
+    source_items: 
+     - name: BW6
+       silent_file: NONE   
+       source: TIB_BW_6.5.1_linux26gl23_x86_64.zip
+     - name: BW6_HF
+       silent_file: NONE
+       source: TIB_BW_6.5.1_HF-001.zip
+     - name: EMS
+       silent_file: '/home/elastik/source/config/TIBCOUniversalInstaller-ems.silent'   
+       source: TIB_ems_8.4.1_linux_x86_64.zip
 
     executable:  TIBCOUniversalInstaller-lnx-x86-64.bin
     executable_command:  ./TIBCOUniversalInstaller-lnx-x86-64.bin
     bw_configure_flg: YES
     tibco_bw6_technology_type: DBEMS
-    tibco_home: /home/tibco/Desktop/software/bw_6_5
-    tibco_bw_home: '/home/tibco/Desktop/software/bw_6_5/bw/6.5'
+    tibco_bw_home: '{{tibco_home}}/bw/6.5'
 
 
 

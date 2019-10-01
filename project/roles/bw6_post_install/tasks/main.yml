@@ -1,0 +1,31 @@
+- name: install ems-driver (for DBEMS)
+  shell: "./bwinstall ems-driver -Dzip.location.esc={{tibco_home}}/components/shared/1.0.0/plugins/"
+  args:
+     chdir: "{{tibco_bw_home}}/bin"
+  when: tibco_bw6_technology_type == 'DBEMS'
+
+- name: Create a directory
+  file:
+    path: '{{ dest_dir }}/config'
+    state: directory
+    mode: '0755'
+
+
+- name: Copy file bwagent for configuration
+  copy:
+    src: '{{ source_dir }}/config/bwagent.json'
+    dest: '{{ dest_dir }}/config/bwagent.json'
+    mode: '0755'
+
+
+
+- name: configure bwagent
+  shell: './bwadmin config -cf {{ dest_dir }}/config/bwagent.json agent'
+  args:
+     chdir: "{{tibco_bw_home}}/bin"
+
+
+
+
+
+

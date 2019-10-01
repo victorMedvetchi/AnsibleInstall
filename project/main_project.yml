@@ -4,7 +4,5 @@
     - vars/vars.yml
 
    roles:
-     - role: install
-       when: tibco_install_flg == 'YES'
      - role: bw6_post_install
-       when: bw_configure_flg == 'YES'
+
